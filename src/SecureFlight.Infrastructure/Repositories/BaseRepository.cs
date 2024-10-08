@@ -22,10 +22,11 @@ public class BaseRepository<TEntity>(SecureFlightDbContext context)
         return await context.Set<TEntity>().AsNoTracking().Where(predicate).ToListAsync();
     }
 
-    public TEntity Update(TEntity entity)
+    public async Task<TEntity> Update(TEntity entity)
     {
         var entry = context.Entry(entity);
         entry.State = EntityState.Modified;
+        await SaveChangesAsync();
         return entity;
     }
 

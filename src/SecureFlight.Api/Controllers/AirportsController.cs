@@ -23,7 +23,7 @@ public class AirportsController(
         var airports = await airportService.GetAllAsync();
         return MapResultToDataTransferObject<IReadOnlyList<Airport>, IReadOnlyList<AirportDataTransferObject>>(airports);
     }
-    
+
     [HttpPut("{code}")]
     [ProducesResponseType(typeof(AirportDataTransferObject), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorResponseActionResult))]
@@ -38,7 +38,9 @@ public class AirportsController(
         airport.City = airportDto.City;
         airport.Country = airportDto.Country;
         airport.Name = airportDto.Name;
-        var result = airportRepository.Update(airport);
+
+        var result = await airportRepository.Update(airport);
+
         return MapResultToDataTransferObject<Airport, AirportDataTransferObject>(result);
     }
 }

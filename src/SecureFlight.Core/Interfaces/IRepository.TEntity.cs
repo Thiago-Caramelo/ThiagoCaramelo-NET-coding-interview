@@ -12,7 +12,7 @@ public interface IRepository<TEntity>
 
     Task<IReadOnlyList<TEntity>> FilterAsync(Expression<Func<TEntity, bool>> predicate);
 
-    TEntity Update(TEntity entity);
+    Task<TEntity> Update(TEntity entity);
 
     Task<TEntity> GetByIdAsync(params object[] keyValues);
 
